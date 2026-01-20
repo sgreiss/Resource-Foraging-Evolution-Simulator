@@ -1,7 +1,9 @@
-struct Cell {
-    x: u32,
-    y: u32,
-    resource_amount: u32,
-    inhabitant_ids: Vec<u32>,
-    territory_owner_id: Option<u32>,
+use crate::world::resource::Resource;
+
+pub struct Cell {
+    pub x: u32,
+    pub y: u32,
+    pub resources: Option<Vec<Resource>>,
+    pub inhabitant_ids: Vec<u32>,
+    pub territory_owner_id: Option<u32>,
 }
