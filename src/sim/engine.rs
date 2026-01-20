@@ -1,23 +1,23 @@
 use crate::agent::agent::Agent;
+use crate::config::sim_config::SimConfig;
 use crate::world::grid::Grid;
-use crate::config::sim_config::Config;
 
 pub struct Engine {
     agents: Vec<Agent>,
-    world: Grid,
+    pub world: Grid,
     generation: u32,
-    config: Config,
+    config: SimConfig,
 }
 
 impl Engine {
-    pub fn new(config: Config) -> Self {
+    pub fn new(config: SimConfig) -> Self {
         let world = Grid::new(config.grid_width, config.grid_height);
         let agents = Vec::new();
         Engine {
             agents,
             world,
             generation: 0,
-            config,
+            config: config,
         }
     }
 

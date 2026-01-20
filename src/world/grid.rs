@@ -1,3 +1,4 @@
+use crate::display::tile::Tile;
 use crate::world::cell::Cell;
 
 pub struct Grid {
@@ -22,15 +23,26 @@ impl Grid {
             }
             grid.push(column);
         }
-        Grid { width, height, grid }
+        Grid {
+            width,
+            height,
+            grid,
+        }
     }
 
     pub fn print(&self) {
         for y in 0..self.height {
             for x in 0..self.width {
-                print!("({},{}) ", self.grid[x as usize][y as usize].x, self.grid[x as usize][y as usize].y);
+                print!(
+                    "({},{}) ",
+                    self.grid[x as usize][y as usize].x, self.grid[x as usize][y as usize].y
+                );
             }
             println!();
         }
+    }
+
+    pub fn get_tile(&self, x: u32, y: u32) -> Tile {
+        self.grid[x as usize][y as usize].to_tile()
     }
 }

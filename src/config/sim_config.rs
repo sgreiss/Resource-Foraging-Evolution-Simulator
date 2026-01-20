@@ -1,4 +1,4 @@
-pub struct Config {
+pub struct SimConfig {
     pub grid_width: u32,
     pub grid_height: u32,
     initial_agent_count: u32,
@@ -8,9 +8,9 @@ pub struct Config {
     random_seed: Option<u64>,
 }
 
-impl Default for Config {
+impl Default for SimConfig {
     fn default() -> Self {
-        Config {
+        SimConfig {
             grid_width: 10,
             grid_height: 10,
             initial_agent_count: 5,

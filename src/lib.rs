@@ -1,13 +1,15 @@
 pub mod agent;
 pub mod config;
+pub mod display;
 pub mod rng;
 pub mod sim;
-pub mod world;
 pub mod utils;
+pub mod world;
 
 pub use agent::agent::Agent;
-pub use config::sim_config::Config;
+pub use config::{render_config::RenderConfig, sim_config::SimConfig};
+pub use display::{renderer::Renderer, tile::Tile};
 pub use rng::Rng;
 pub use sim::engine::Engine;
-pub use world::{Grid, Cell, Resource};
 pub use utils::*;
+pub use world::{Cell, Grid, Resource};
