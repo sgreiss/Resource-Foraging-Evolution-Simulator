@@ -4,14 +4,14 @@ use crate::world::grid::Grid;
 
 pub struct Engine {
     agents: Vec<Agent>,
-    pub world: Grid,
+    world: Grid,
     generation: u32,
     config: SimConfig,
 }
 
 impl Engine {
     pub fn new(config: SimConfig) -> Self {
-        let world = Grid::new(config.grid_width, config.grid_height);
+        let world = Grid::new(config.get_grid_width(), config.get_grid_height());
         let agents = Vec::new();
         Engine {
             agents,
@@ -19,6 +19,10 @@ impl Engine {
             generation: 0,
             config: config,
         }
+    }
+
+    pub fn get_world(&self) -> &Grid {
+        &self.world
     }
 
     pub fn print_grid(&self) {

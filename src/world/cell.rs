@@ -12,10 +12,10 @@ pub struct Cell {
 impl Cell {
     pub fn to_tile(&self) -> Tile {
         // Placeholder logic for converting a Cell to a Tile
-        Tile {
-            x: self.x,
-            y: self.y,
-            color: [0, 255, 0, 255],
-        }
+        Tile::new(
+            self.x,
+            self.y,
+            [0, 255, 0, 255],
+        )
     }
 }

@@ -1,7 +1,7 @@
 pub struct RenderConfig {
-    pub render_width: u32,
-    pub render_height: u32,
-    pub tile_size: usize,
+    render_width: u32,
+    render_height: u32,
+    tile_size: usize,
 }
 
 impl RenderConfig {
@@ -11,5 +11,17 @@ impl RenderConfig {
             render_height: 600,
             tile_size: 10,
         }
+    }
+
+    pub fn get_width(&self) -> u32 {
+        self.render_width
+    }
+
+    pub fn get_height(&self) -> u32 {
+        self.render_height
+    }
+
+    pub fn get_tile_size(&self) -> usize {
+        self.tile_size
     }
 }

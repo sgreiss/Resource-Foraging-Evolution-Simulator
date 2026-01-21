@@ -2,9 +2,9 @@ use crate::display::tile::Tile;
 use crate::world::cell::Cell;
 
 pub struct Grid {
-    pub width: u32,
-    pub height: u32,
-    pub grid: Vec<Vec<Cell>>,
+    width: u32,
+    height: u32,
+    grid: Vec<Vec<Cell>>,
 }
 
 impl Grid {
@@ -44,5 +44,17 @@ impl Grid {
 
     pub fn get_tile(&self, x: u32, y: u32) -> Tile {
         self.grid[x as usize][y as usize].to_tile()
+    }
+
+    pub fn get_width(&self) -> u32 {
+        self.width
+    }
+
+    pub fn get_height(&self) -> u32 {
+        self.height
+    }
+
+    pub fn get_grid(&self) -> &Vec<Vec<Cell>> {
+        &self.grid
     }
 }
