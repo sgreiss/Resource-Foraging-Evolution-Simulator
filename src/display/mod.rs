@@ -1,4 +1,4 @@
-pub mod tile;
 pub mod renderer;
+pub mod tile;
 
 pub use tile::Tile;

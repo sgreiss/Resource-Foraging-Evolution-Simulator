@@ -9,11 +9,11 @@ impl Tile {
         Tile { x, y, color }
     }
 
-    pub fn get_position(&self) -> (u32, u32) {
+    pub fn position(&self) -> (u32, u32) {
         (self.x, self.y)
     }
 
-    pub fn get_color(&self) -> [u8; 4] {
+    pub fn color(&self) -> [u8; 4] {
         self.color
     }
 }
