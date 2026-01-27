@@ -1,6 +1,6 @@
 use crate::display::tile::Tile;
 use crate::utils::print_colored;
-use crate::world::cell::Cell;
+use crate::world::{cell::Cell, resource::Resource};
 
 pub struct Grid {
     width: u32,
@@ -14,7 +14,7 @@ impl Grid {
         for x in 0..width {
             let mut column = Vec::new();
             for y in 0..height {
-                column.push(Cell::new((x, y), None, Vec::new(), None));
+                column.push(Cell::new((x, y), Vec::new(), Vec::new(), None));
             }
             grid.push(column);
         }
@@ -27,6 +27,10 @@ impl Grid {
 
     pub fn place_agent(&mut self, agent_id: u32, x: u32, y: u32) {
         self.grid[x as usize][y as usize].add_inhabitant(agent_id);
+    }
+
+    pub fn place_resource(&mut self, x: u32, y: u32, resource: Resource) {
+        self.grid[x as usize][y as usize].add_resource(resource);
     }
 
     pub fn get_tile(&self, x: u32, y: u32) -> Tile {
@@ -62,20 +66,24 @@ impl Grid {
         }
     }
     pub fn print(&self) {
-        println!("┌{}┐", "──".repeat(self.width as usize));
+        println!("┌{}┐", "─".repeat((3 * self.width + 1) as usize));
         for y in 0..self.height {
-            print!("│");
+            print!("│ ");
             for x in 0..self.width {
                 if self.grid[x as usize][y as usize].has_resources() {
-                    print_colored("R ", crossterm::style::Color::Green);
-                } else if self.grid[x as usize][y as usize].has_inhabitant() {
-                    print_colored("A ", crossterm::style::Color::Blue);
+                    print_colored("R", crossterm::style::Color::Green);
                 } else {
-                    print_colored(". ", crossterm::style::Color::DarkGrey);
+                    print!(".");
                 }
+                if self.grid[x as usize][y as usize].has_inhabitant() {
+                    print_colored("A", crossterm::style::Color::Red);
+                } else {
+                    print!(".");
+                }
+                print!(" ");
             }
             println!("│");
         }
-        println!("└{}┘", "──".repeat(self.width as usize));
+        println!("└{}┘", "─".repeat((3 * self.width + 1) as usize));
     }
 }

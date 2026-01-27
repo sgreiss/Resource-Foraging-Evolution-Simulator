@@ -1,7 +1,10 @@
 use crate::agent::agent::Agent;
 use crate::config::sim_config::SimConfig;
 use crate::rng::RNG;
-use crate::world::grid::Grid;
+use crate::world::{
+    grid::Grid,
+    resource::{Resource, ResourceType},
+};
 
 pub struct Engine {
     next_agent_id: u32,
@@ -35,6 +38,16 @@ impl Engine {
             let agent = Agent::new(id, (x, y));
             self.agents.push(agent);
             self.world.place_agent(id, x, y);
+        }
+    }
+
+    pub fn spread_resources(&mut self) {
+        for _ in 0..self.config.initial_resource_count {
+            let x = self.rng.choose_range(0..self.config.grid_width);
+            let y = self.rng.choose_range(0..self.config.grid_height);
+
+            let resource = Resource::new(ResourceType::FoodSource);
+            self.world.place_resource(x, y, resource);
         }
     }
 

@@ -3,7 +3,7 @@ use crate::world::resource::Resource;
 
 pub struct Cell {
     pub position: (u32, u32),
-    resources: Option<Vec<Resource>>,
+    resources: Vec<Resource>,
     inhabitant_ids: Vec<u32>,
     territory_owner_id: Option<u32>,
 }
@@ -11,7 +11,7 @@ pub struct Cell {
 impl Cell {
     pub fn new(
         position: (u32, u32),
-        resources: Option<Vec<Resource>>,
+        resources: Vec<Resource>,
         inhabitant_ids: Vec<u32>,
         territory_owner_id: Option<u32>,
     ) -> Self {
@@ -27,13 +27,17 @@ impl Cell {
         self.inhabitant_ids.push(agent_id);
     }
 
+    pub fn add_resource(&mut self, resource: Resource) {
+        self.resources.push(resource)
+    }
+
     pub fn to_tile(&self) -> Tile {
         // Placeholder logic for converting a Cell to a Tile
         Tile::new(self.position.0, self.position.1, [0, 255, 0, 255])
     }
 
     pub fn has_resources(&self) -> bool {
-        self.resources.is_some()
+        !self.resources.is_empty()
     }
 
     pub fn has_inhabitant(&self) -> bool {

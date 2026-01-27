@@ -1,8 +1,11 @@
+use crate::world::grid;
+
 #[derive(Clone)]
 pub struct SimConfig {
     pub grid_width: u32,
     pub grid_height: u32,
     pub initial_agent_count: u32,
+    pub initial_resource_count: u32,
     pub resource_spawn_rate: f32,
     pub max_simulation_steps: u32,
     pub mutation_rate: f32,
@@ -15,6 +18,7 @@ impl SimConfig {
             grid_width: 10,
             grid_height: 10,
             initial_agent_count: 15,
+            initial_resource_count: 25,
             resource_spawn_rate: 0.1,
             max_simulation_steps: 1000,
             mutation_rate: 0.01,
