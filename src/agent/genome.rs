@@ -1,3 +1,4 @@
+#[derive(Clone, Copy, Debug)]
 pub struct Genome {
     speed: u32,
     vision_range: u32,

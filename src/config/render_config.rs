@@ -1,3 +1,4 @@
+#[derive(Clone, Copy, Debug)]
 pub struct RenderConfig {
     pub render_width: u32,
     pub render_height: u32,

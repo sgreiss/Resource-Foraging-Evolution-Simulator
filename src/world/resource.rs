@@ -1,3 +1,4 @@
+#[derive(Clone, Copy, Debug)]
 pub struct Resource {
     resource_type: ResourceType,
 }
@@ -8,6 +9,7 @@ impl Resource {
     }
 }
 
+#[derive(Clone, Copy, Debug)]
 pub enum ResourceType {
     Food,
     FoodSource,

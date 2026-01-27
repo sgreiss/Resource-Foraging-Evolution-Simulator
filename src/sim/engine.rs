@@ -1,3 +1,4 @@
+use crate::Coordinate;
 use crate::agent::agent::Agent;
 use crate::config::sim_config::SimConfig;
 use crate::rng::RNG;
@@ -6,6 +7,7 @@ use crate::world::{
     resource::{Resource, ResourceType},
 };
 
+#[derive(Clone, Debug)]
 pub struct Engine {
     next_agent_id: u32,
     agents: Vec<Agent>,
@@ -33,11 +35,12 @@ impl Engine {
         for _ in 0..self.config.initial_agent_count {
             let x = self.rng.choose_range(0..self.config.grid_width);
             let y = self.rng.choose_range(0..self.config.grid_height);
+            let position = Coordinate::new(x, y);
             let id = self.new_agent_id();
 
-            let agent = Agent::new(id, (x, y));
+            let agent = Agent::new(id, position);
             self.agents.push(agent);
-            self.world.place_agent(id, x, y);
+            self.world.place_agent(id, position);
         }
     }
 
@@ -45,9 +48,10 @@ impl Engine {
         for _ in 0..self.config.initial_resource_count {
             let x = self.rng.choose_range(0..self.config.grid_width);
             let y = self.rng.choose_range(0..self.config.grid_height);
+            let position = Coordinate::new(x, y);
 
             let resource = Resource::new(ResourceType::FoodSource);
-            self.world.place_resource(x, y, resource);
+            self.world.place_resource(position, resource);
         }
     }
 
@@ -65,11 +69,11 @@ impl Engine {
         &self.world
     }
 
-    pub fn print_grid_dim(&self) {
+    pub fn print_world_dim(&self) {
         self.world.print_dim();
     }
 
-    pub fn print_grid(&self) {
+    pub fn print_world(&self) {
         self.world.print();
     }
 }

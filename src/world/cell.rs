@@ -1,8 +1,12 @@
 use crate::display::tile::Tile;
 use crate::world::resource::Resource;
+use crate::Coordinate;
+use crate::utils::ids::Id;
 
+#[derive(Clone, Debug)]
 pub struct Cell {
-    pub position: (u32, u32),
+    pub id: Id<Cell>,
+    pub position: Coordinate,
     resources: Vec<Resource>,
     inhabitant_ids: Vec<u32>,
     territory_owner_id: Option<u32>,
@@ -10,12 +14,14 @@ pub struct Cell {
 
 impl Cell {
     pub fn new(
-        position: (u32, u32),
+        id: Id<Cell>,
+        position: Coordinate,
         resources: Vec<Resource>,
         inhabitant_ids: Vec<u32>,
         territory_owner_id: Option<u32>,
     ) -> Self {
         Cell {
+            id,
             position,
             resources,
             inhabitant_ids,
@@ -33,7 +39,7 @@ impl Cell {
 
     pub fn to_tile(&self) -> Tile {
         // Placeholder logic for converting a Cell to a Tile
-        Tile::new(self.position.0, self.position.1, [0, 255, 0, 255])
+        Tile::new(self.id.convert::<Tile>(), self.position, [0, 255, 0, 255])
     }
 
     pub fn has_resources(&self) -> bool {

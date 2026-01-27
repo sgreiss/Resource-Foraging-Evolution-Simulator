@@ -2,6 +2,7 @@ use crate::display::tile::Tile;
 use crate::utils::print_colored;
 use crate::world::{cell::Cell, resource::Resource};
 
+#[derive(Clone, Debug)]
 pub struct Grid {
     width: u32,
     height: u32,

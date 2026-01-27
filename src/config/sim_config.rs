@@ -1,6 +1,4 @@
-use crate::world::grid;
-
-#[derive(Clone)]
+#[derive(Clone, Copy, Debug)]
 pub struct SimConfig {
     pub grid_width: u32,
     pub grid_height: u32,

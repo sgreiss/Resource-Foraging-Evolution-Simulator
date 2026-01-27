@@ -3,7 +3,24 @@ use crossterm::{
     style::{Color, SetForegroundColor},
     terminal::{Clear, ClearType},
 };
-use std::io::{Write, stdout};
+use std::io::{stdout};
+
+#[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
+pub struct Coordinate(u32, u32);
+
+impl Coordinate {
+    pub fn new(x: u32, y: u32) -> Self {
+        Coordinate(x, y)
+    }
+
+    pub fn from_usize(x: usize, y: usize) -> Self {
+        Coordinate(x as u32, y as u32)
+    }
+
+    pub fn as_usize(&self) -> (usize, usize) {
+        (self.0 as usize, self.1 as usize)
+    }
+}
 
 pub fn clear_screen() {
     let mut stdout = stdout();

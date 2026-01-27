@@ -1,20 +1,23 @@
+use crate::Coordinate;
 use crate::agent::genome::Genome;
+use crate::utils::ids::Id;
 
+#[derive(Clone, Debug)]
 pub struct Agent {
-    pub id: u32,
+    pub id: Id<Agent>,
     pub name: String,
     genome: Genome,
-    location: (u32, u32),
-    territory: Vec<(u32, u32)>,
+    location: Coordinate,
+    territory: Vec<Coordinate>,
     energy: u32,
     age: u32,
 }
 
 impl Agent {
-    pub fn new(id: u32, position: (u32, u32)) -> Self {
+    pub fn new(id: Id<Agent>, position: Coordinate) -> Self {
         Agent {
-            id,
-            name: format!("Agent_{}", id),
+            id: id.clone(),
+            name: format!("Agent_{}", id.raw()),
             genome: Genome::random(),
             location: position,
             territory: Vec::new(),

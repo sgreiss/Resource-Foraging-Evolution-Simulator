@@ -1,6 +1,7 @@
 use rand::Rng;
 use rand::prelude::*;
 
+#[derive(Clone, Debug)]
 pub struct RNG {
     rng: rand_chacha::ChaCha8Rng,
 }
