@@ -1,15 +1,16 @@
-use crate::display::tile::Tile;
-use crate::world::resource::Resource;
 use crate::Coordinate;
+use crate::agent::agent::Agent;
+use crate::display::tile::Tile;
 use crate::utils::ids::Id;
+use crate::world::resource::Resource;
 
 #[derive(Clone, Debug)]
 pub struct Cell {
     pub id: Id<Cell>,
     pub position: Coordinate,
     resources: Vec<Resource>,
-    inhabitant_ids: Vec<u32>,
-    territory_owner_id: Option<u32>,
+    inhabitant_ids: Vec<Id<Agent>>,
+    territory_owner_id: Option<Id<Agent>>,
 }
 
 impl Cell {
@@ -17,8 +18,8 @@ impl Cell {
         id: Id<Cell>,
         position: Coordinate,
         resources: Vec<Resource>,
-        inhabitant_ids: Vec<u32>,
-        territory_owner_id: Option<u32>,
+        inhabitant_ids: Vec<Id<Agent>>,
+        territory_owner_id: Option<Id<Agent>>,
     ) -> Self {
         Cell {
             id,
@@ -29,7 +30,7 @@ impl Cell {
         }
     }
 
-    pub fn add_inhabitant(&mut self, agent_id: u32) {
+    pub fn add_inhabitant(&mut self, agent_id: Id<Agent>) {
         self.inhabitant_ids.push(agent_id);
     }
 

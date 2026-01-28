@@ -2,6 +2,7 @@ use crate::Coordinate;
 use crate::agent::agent::Agent;
 use crate::config::sim_config::SimConfig;
 use crate::rng::RNG;
+use crate::utils::ids::IdManager;
 use crate::world::{
     grid::Grid,
     resource::{Resource, ResourceType},
@@ -9,25 +10,26 @@ use crate::world::{
 
 #[derive(Clone, Debug)]
 pub struct Engine {
-    next_agent_id: u32,
     agents: Vec<Agent>,
     world: Grid,
     generation: u32,
     config: SimConfig,
     rng: RNG,
+    id_manager: IdManager,
 }
 
 impl Engine {
     pub fn new(config: SimConfig) -> Self {
+        let id_manager = IdManager::new();
         let world = Grid::new(config.grid_width, config.grid_height);
         let agents = Vec::new();
         Engine {
-            next_agent_id: 0,
             agents,
             world,
             generation: 0,
             config: config.clone(),
             rng: RNG::new(config.random_seed.unwrap_or(0)),
+            id_manager,
         }
     }
 
@@ -36,9 +38,9 @@ impl Engine {
             let x = self.rng.choose_range(0..self.config.grid_width);
             let y = self.rng.choose_range(0..self.config.grid_height);
             let position = Coordinate::new(x, y);
-            let id = self.new_agent_id();
+            let id = self.id_manager.next_id();
 
-            let agent = Agent::new(id, position);
+            let agent = Agent::new(id.clone(), position);
             self.agents.push(agent);
             self.world.place_agent(id, position);
         }
@@ -53,12 +55,6 @@ impl Engine {
             let resource = Resource::new(ResourceType::FoodSource);
             self.world.place_resource(position, resource);
         }
-    }
-
-    pub fn new_agent_id(&mut self) -> u32 {
-        let id = self.next_agent_id;
-        self.next_agent_id += 1;
-        id
     }
 
     pub fn get_agents(&self) -> &Vec<Agent> {

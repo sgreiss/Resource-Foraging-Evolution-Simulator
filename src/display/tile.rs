@@ -10,7 +10,11 @@ pub struct Tile {
 
 impl Tile {
     pub fn new(id: Id<Tile>, position: Coordinate, color: [u8; 4]) -> Self {
-        Tile { id, position, color }
+        Tile {
+            id,
+            position,
+            color,
+        }
     }
 
     pub fn id(&self) -> Id<Tile> {

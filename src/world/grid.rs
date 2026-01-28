@@ -1,5 +1,8 @@
+use crate::Coordinate;
+use crate::agent::agent::Agent;
 use crate::display::tile::Tile;
-use crate::utils::print_colored;
+use crate::ids::*;
+use crate::print_colored;
 use crate::world::{cell::Cell, resource::Resource};
 
 #[derive(Clone, Debug)]
@@ -12,10 +15,18 @@ pub struct Grid {
 impl Grid {
     pub fn new(width: u32, height: u32) -> Self {
         let mut grid = Vec::new();
+        let mut id_manager = IdManager::new();
         for x in 0..width {
             let mut column = Vec::new();
             for y in 0..height {
-                column.push(Cell::new((x, y), Vec::new(), Vec::new(), None));
+                let cell_id = id_manager.next_id::<Cell>();
+                column.push(Cell::new(
+                    cell_id,
+                    Coordinate::new(x, y),
+                    Vec::new(),
+                    Vec::new(),
+                    None,
+                ));
             }
             grid.push(column);
         }
@@ -26,11 +37,13 @@ impl Grid {
         }
     }
 
-    pub fn place_agent(&mut self, agent_id: u32, x: u32, y: u32) {
+    pub fn place_agent(&mut self, agent_id: Id<Agent>, coordinate: Coordinate) {
+        let (x, y) = coordinate.as_u32();
         self.grid[x as usize][y as usize].add_inhabitant(agent_id);
     }
 
-    pub fn place_resource(&mut self, x: u32, y: u32, resource: Resource) {
+    pub fn place_resource(&mut self, coordinate: Coordinate, resource: Resource) {
+        let (x, y) = coordinate.as_u32();
         self.grid[x as usize][y as usize].add_resource(resource);
     }
 
@@ -57,11 +70,8 @@ impl Grid {
     pub fn print_dim(&self) {
         for y in 0..self.height {
             for x in 0..self.width {
-                print!(
-                    "({}, {}) ",
-                    self.grid[x as usize][y as usize].position.0,
-                    self.grid[x as usize][y as usize].position.1
-                );
+                let position = self.grid[x as usize][y as usize].position;
+                print!("{}", position);
             }
             println!();
         }

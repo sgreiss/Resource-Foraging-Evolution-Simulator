@@ -3,7 +3,7 @@ use crossterm::{
     style::{Color, SetForegroundColor},
     terminal::{Clear, ClearType},
 };
-use std::io::{stdout};
+use std::{fmt::Display, io::stdout};
 
 #[derive(Copy, Clone, Debug, PartialEq, Eq, Hash)]
 pub struct Coordinate(u32, u32);
@@ -19,6 +19,16 @@ impl Coordinate {
 
     pub fn as_usize(&self) -> (usize, usize) {
         (self.0 as usize, self.1 as usize)
+    }
+
+    pub fn as_u32(&self) -> (u32, u32) {
+        (self.0, self.1)
+    }
+}
+
+impl Display for Coordinate {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {})", self.0, self.1)
     }
 }
 

@@ -1,4 +1,4 @@
-use std::{{collections::HashMap, marker::PhantomData, any::TypeId}};
+use std::marker::PhantomData;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct Id<T> {
@@ -21,25 +21,24 @@ impl<T> Id<T> {
     pub fn raw(self) -> u32 {
         self.value
     }
+
+    pub fn next(&self) -> Id<T> {
+        Id::new(self.value + 1)
+    }
 }
 
 #[derive(Clone, Debug)]
 pub struct IdManager {
-    latest: HashMap<TypeId, u32>,
+    latest: u32,
 }
 
 impl IdManager {
     pub fn new() -> Self {
-        IdManager {
-            latest: HashMap::new(),
-        }
+        IdManager { latest: 0 }
     }
 
-    pub fn next_id<T : 'static>(&mut self) -> Id<T> {
-        let type_id = TypeId::of::<T>();
-        let counter = self.latest.entry(type_id).or_insert(0);
-        let id = Id::new(*counter);
-        *counter += 1;
-        id
+    pub fn next_id<T>(&mut self) -> Id<T> {
+        self.latest += 1;
+        Id::new(self.latest)
     }
 }

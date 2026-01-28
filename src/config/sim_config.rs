@@ -13,8 +13,8 @@ pub struct SimConfig {
 impl SimConfig {
     pub fn default() -> Self {
         SimConfig {
-            grid_width: 10,
-            grid_height: 10,
+            grid_width: 50,
+            grid_height: 50,
             initial_agent_count: 15,
             initial_resource_count: 25,
             resource_spawn_rate: 0.1,
